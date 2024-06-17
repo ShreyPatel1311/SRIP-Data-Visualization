@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(MeshFilter))]
-public class GenerateSystemProceduralPlot : MonoBehaviour
+public class SystemPlot : MonoBehaviour
 {
     [Header("Axial Plane Properties")]
     [SerializeField] private GameObject axisPlane1;
@@ -19,6 +19,9 @@ public class GenerateSystemProceduralPlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textW0;
     [SerializeField] private TextMeshProUGUI textD;
     [SerializeField] private TextMeshProUGUI textK;
+    [SerializeField] private float W0 = 0.5f;
+    [SerializeField] private float k = 1;
+    [SerializeField] private float d = 1;
 
     private Mesh plotMesh;
     private MeshCollider mc;
@@ -26,9 +29,6 @@ public class GenerateSystemProceduralPlot : MonoBehaviour
     private int[] triangles;
     private Vector2[] uvs;
     private Color[] colors;
-    private float W0;
-    private float k;
-    private float d;
     private float maxY = 0f;
     private float minY = Mathf.Infinity;
 
@@ -39,15 +39,18 @@ public class GenerateSystemProceduralPlot : MonoBehaviour
 
     private void AssignValues()
     {
-        W0 = sliderW0.value;
-        k = sliderK.value;
-        d = sliderD.value;
-        textW0.text = sliderW0.value.ToString();
-        textK.text = sliderK.value.ToString();
-        textD.text = sliderD.value.ToString();
+        if (sliderD != null)
+        {
+            W0 = sliderW0.value;
+            k = sliderK.value;
+            d = sliderD.value;
+            textW0.text = sliderW0.value.ToString();
+            textK.text = sliderK.value.ToString();
+            textD.text = sliderD.value.ToString();
+        }
     }
 
-    private void CreatePlot()
+    public void CreatePlot()
     {
         AssignValues();
         vertices = new Vector3[(2 * xSize + 1) * (2 * zSize + 1)];
@@ -102,7 +105,7 @@ public class GenerateSystemProceduralPlot : MonoBehaviour
         }
     }
 
-    private void UpdateMesh()
+    public void UpdateMesh()
     {
         plotMesh.Clear();
         plotMesh.name = "3D Graph";
@@ -135,13 +138,23 @@ public class GenerateSystemProceduralPlot : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if(vertices == null)
+        if (vertices == null)
         {
             return;
         }
         for (int i = 0; i < vertices.Length; i++)
         {
             Gizmos.DrawSphere(vertices[i], 0.1f);
+        }
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag("Plot"))
+        {
+            collider.transform.position = transform.position;
+            collider.transform.parent = transform.parent;
+            collider.GetComponent<MeshRenderer>().material.SetColor("_Color", new Color(Random.Range(0, 255), Random.Range(0, 255), Random.Range(0, 255)));
         }
     }
 }

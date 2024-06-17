@@ -26,7 +26,7 @@ namespace TMPro
 
 
         /// <summary>
-        /// Event delegate triggered when pointer is over a character.
+        /// Event delegate triggered when weavePointer is over a character.
         /// </summary>
         public CharacterSelectionEvent onCharacterSelection
         {
@@ -38,7 +38,7 @@ namespace TMPro
 
 
         /// <summary>
-        /// Event delegate triggered when pointer is over a sprite.
+        /// Event delegate triggered when weavePointer is over a sprite.
         /// </summary>
         public SpriteSelectionEvent onSpriteSelection
         {
@@ -50,7 +50,7 @@ namespace TMPro
 
 
         /// <summary>
-        /// Event delegate triggered when pointer is over a word.
+        /// Event delegate triggered when weavePointer is over a word.
         /// </summary>
         public WordSelectionEvent onWordSelection
         {
@@ -62,7 +62,7 @@ namespace TMPro
 
 
         /// <summary>
-        /// Event delegate triggered when pointer is over a line.
+        /// Event delegate triggered when weavePointer is over a line.
         /// </summary>
         public LineSelectionEvent onLineSelection
         {
@@ -74,7 +74,7 @@ namespace TMPro
 
 
         /// <summary>
-        /// Event delegate triggered when pointer is over a link.
+        /// Event delegate triggered when weavePointer is over a link.
         /// </summary>
         public LinkSelectionEvent onLinkSelection
         {
